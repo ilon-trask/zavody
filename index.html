@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="whiteHead"></div>
+    </header>
+    <main>
+      <div class="fCont">
+        <p class="mainText">Переробні підприємства ягід, грибів та овочів</p>
+      </div>
+      <div>
+        <p class="SText">
+          Підприємства України, які займається заготівлею, переробкою і продажем
+          заморожених та сушених ягід карпатських чорниць, брусниці, ожини,
+          полуниці, малини, обліпихи, аронії, журавлини, бузини, білих грибів,
+          лисичок і опеньків.
+        </p>
+      </div>
+      <div class="title">
+        <p class="mainText">Перелік переробних підприємств</p>
+      </div>
+      <div class="input">
+        <div>
+          <p class="inpText">Регіон</p>
+          <select id="ada">
+            <option selected>Україна</option>
+            <option>Вінницька</option>
+            <option>Волинська</option>
+            <option>Дніпропетровська</option>
+            <option>Донецька</option>
+            <option>Житомирська</option>
+            <option>Закарпатська</option>
+            <option>Запорізька</option>
+            <option>Івано-Франківська</option>
+            <option>Київська</option>
+            <option>Кіровоградська</option>
+            <option>Луганська</option>
+            <option>Львівська</option>
+            <option>Миколаївська</option>
+            <option>Одеська</option>
+            <option>Полтавська</option>
+            <option>Рівненська</option>
+            <option>Сумська</option>
+            <option>Тернопільська</option>
+            <option>Харківська</option>
+            <option>Херсонська</option>
+            <option>Хмельницька</option>
+            <option>Черкаська</option>
+            <option>Чернівецька</option>
+            <option>Чернігівська</option>
+          </select>
+        </div>
+        <div>
+          <p class="inpText">Спеціалізація</p>
+          <select id="specialization">
+            <option>Продукція</option>
+            <option>Бузина</option>
+            <option>Вишня</option>
+            <option>Горобина</option>
+            <option>Лохина</option>
+            <option>Малина</option>
+            <option>Обліпиха</option>
+            <option>Полуниця</option>
+            <option>Смородина</option>
+            <option>Суниця</option>
+            <option>Черешня</option>
+            <option>Чорниця</option>
+            <option>Шипшина</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <table border="1" width="100%" cellpadding="5">
+          <tr>
+            <th>№</th>
+            <th>Назва підприємства</th>
+            <th>Спеціалізація</th>
+            <th>Контакти</th>
+            <th>Контактні особи</th>
+            <th>Адреса</th>
+          </tr>
+          <tbody id="organizationsTableBody"></tbody>
+        </table>
+      </div>
+      <!-- <div class="btnCont">
+        <a
+          class="dBtn"
+          href="https://minagro.gov.ua/ua/file-storage/reyestr-doradchih-sluzhb-ta-doradnikiv"
+          target="_blank"
+        >
+          <p class="mainBtn">Переглянути</p>
+        </a>
+        <p class="rightText">
+          Реєстр сільськогосподарських дорадчих служб України
+        </p>
+      </div> -->
+    </main>
+  </body>
+  <script>
+    const btn = document.querySelector("#ada");
+    const specialization = document.getElementById("specialization");
+    const checkOrganization = function (organization, region, specialization) {
+      if (region != "Україна" && organization.region != region) {
+        return false;
+      }
+      if (
+        specialization != "Продукція" &&
+        organization.specialization != specialization
+      ) {
+        return false;
+      }
+      return true;
+    };
+    const getOrganizations = function (region, specialization) {
+      const organizations = [
+        {
+          number: 1,
+          name: "ФГ 'Еко беррі",
+          region: "Івано-Франківська",
+          specialization: "Малина",
+          contacts: " tel:067-370-67-96",
+          advisers: "Коломийський район",
+        },
+        {
+          number: 2,
+          name: "ТОВ 'Ярофрут'",
+          region: "Львівська",
+          specialization: "Полуниця",
+          contacts: "tel:068-741-33-44 ",
+          advisers: "Львів, Поліська, 6",
+        },
+        {
+          number: 3,
+          name: "ТОВ 'АГРАНА ФРУТ УКРАЇНА'",
+          region: "Вінницька",
+          specialization: "Полуниця",
+          contacts: " tel:043-255-35-01",
+          advisers: "Вінниця Вулиця Сергія Зулінського 32",
+        },
+        {
+          number: 4,
+          name: "ТОВ 'АГРОВЕСНА-МАРКЕТ'",
+          region: "Київська",
+          specialization: "Полуниця",
+          contacts: "tel:067-333-55-10",
+          advisers:
+            "Макарівський р-н, село Ніжиловичі, ВУЛИЦЯ ПЕТРОВСЬКОГО, будинок 126",
+        },
+        {
+          number: 5,
+          name: "T.B.FRUIT",
+          region: "Львівська",
+          specialization: "Полуниця",
+          contacts: "032-243-67-14",
+          advisers: "вул. Артищівська, буд.9, корпус 4, м. Городок",
+        },
+        // {
+        //   number: 6,
+        //   name: "ТОВ 'ЗИМОВА ЯГОДА'",
+        //   region: "Волинська",
+        //   specialization: "Полуниця",
+        //   contacts: "tel:050-886-81-10",
+        //   advisers: "Деркач І.О. Деркач А Ф. Балицька А.А.",
+        // },
+        // {
+        //   number: 7,
+        //   name: "ТОВ «ТАН ДЕМ» ",
+        //   region: "Івано-Франківська",
+        //   specialization: "Бухгалтерський облік",
+        //   contacts: "tel:067-370-67-96,",
+        //   advisers: "Фрик Н.В. Зомчак М.М. Гарагуц І.Ф.",
+        // },
+        // {
+        //   number: 8,
+        //   name: "ТОВ «Інститут обліку і фінансів»",
+        //   region: "Київська",
+        //   specialization: "Податковий облік",
+        //   contacts: "email:iaf.buch.info@gmail.com tel:044-259-01-24",
+        //   advisers: "Волошина О.В. Жук В.М. Попко Є.Ю.",
+        // },
+        // {
+        //   number: 9,
+        //   name: "ГC «Органічна Україна»",
+        //   region: "Київська",
+        //   specialization: "Бухгалтерський облік",
+        //   contacts: "email:info@organicukraine.org.ua tel:(067) 171-75-77",
+        //   advisers: "Березовська О.М. Мамонтова А.С. Розум О.О.",
+        // },
+        // {
+        //   number: 10,
+        //   name: "ВГО «Національна асоціація сільськогосподарських дорадчих служб України»",
+        //   region: "Київська",
+        //   specialization: "Податковий облік",
+        //   contacts: "email:doradaukraine@gmail.com tel:098-927-95-54",
+        //   advisers: "Бакун Ю.О. Павлишинець В.М. Проніна В.І.",
+        // },
+        // {
+        //   number: 11,
+        //   name: "ГО «Сільськогосподарський дорадчий центр «Фермерська країна»»",
+        //   region: "Львівська",
+        //   specialization: "Управлінський облік",
+        //   contacts: " tel:098-000-10-07",
+        //   advisers: "Бардахівська Г.І. Завада Х.В. Табінська Н.С.",
+        // },
+        // {
+        //   number: 12,
+        //   name: "Львівська Аграрна Палата",
+        //   region: "Львівська",
+        //   specialization: "Бухгалтерський облік",
+        //   contacts: "email: igor.vuytsyk@gmail.com     tel:(032) 294-84-02",
+        //   advisers: "Кисіль В.О. Бейзик О.М. Березова О.В.",
+        // },
+        // {
+        //   number: 13,
+        //   name: "Державний професійно-технічний навчальний заклад «Одеський державний центр професійного навчання працівників переробної промисловості»",
+        //   region: "Одеська",
+        //   specialization: "Податковий облік",
+        //   contacts: "email:dptnz-odcpnppp@ukr.net tel:755 35 48",
+        //   advisers: "Цуркан Н.Г. Ніколаєва Т.В. Новорічний Ю.В.",
+        // },
+        // {
+        //   number: 14,
+        //   name: "Полтавська обласна громадська організація «Офіційна сільськогосподарська дорадча служба»",
+        //   region: "Полтавська",
+        //   specialization: "Бухгалтерський облік",
+        //   contacts: "email:vvpugach@ukr.net tel:066-798-90-61",
+        //   advisers: "Безгін М.В. Безгіна І.В. Пугач В.В.",
+        // },
+        // {
+        //   number: 15,
+        //   name: "Полтавська обласна сільськогосподарська дорадча служба",
+        //   region: "Полтавська",
+        //   specialization: "Податковий облік",
+        //   contacts: "email:porada.poltava@gmail.com tel:0532-611-527",
+        //   advisers: "Андрієнко С.М. Грузін Т.Є. Дутка В.М.",
+        // },
+        // {
+        //   number: 16,
+        //   name: "Громадська організація Рівненська обласна сільськогосподарська дорадча служба «Наука»",
+        //   region: "Рівненська",
+        //   specialization: "Управлінський облік",
+        //   contacts: "tel:0362-27-36-06",
+        //   advisers: "Лукащук Л.Я. Польовий В.М. Першута В.В.",
+        // },
+        // {
+        //   number: 17,
+        //   name: "Сумська торгово-промислова палата",
+        //   region: "Сумська",
+        //   specialization: "Бухгалтерський облік",
+        //   contacts: "tel:0542-600-390,",
+        //   advisers: "Білан Є.В. Палющенко А.С. Колодяжна С.О.",
+        // },
+        // {
+        //   number: 18,
+        //   name: "ГО «Тернопільська аграрна дорадча служба»",
+        //   region: "Тернопільська",
+        //   specialization: "Податковий облік",
+        //   contacts: "",
+        //   advisers: "Мартюк В.І. Андрійчук Т.С. Сойка В.Б.",
+        // },
+        // {
+        //   number: 19,
+        //   name: "ГО «Тернопільська аграрна палата 2018»",
+        //   region: "Тернопільська",
+        //   specialization: "Бухгалтерський облік",
+        //   contacts: "email:agrochamber.ternopil@gmail.com tel:067-276-80-67",
+        //   advisers: "Ветров Д.А. Десятнюк В.І. Наваляний М.В.",
+        // },
+        // {
+        //   number: 20,
+        //   name: "ГО «Харківський обласний центр дорадництва»",
+        //   region: "Харківська",
+        //   specialization: "Податковий облік",
+        //   contacts: "email:doradaxo2019@gmail.com tel:067-572-25-99",
+        //   advisers: "Гапоник С.В. Автухов А.К. Бушнов В.В.",
+        // },
+        // {
+        //   number: 21,
+        //   name: "ГО «Херсонська обласна сільськогосподарська дорадча служба»",
+        //   region: "Херсонська ",
+        //   specialization: "Управлінський облік",
+        //   contacts: " email:dorada.kherson@gmail.com tel:099-184-98-30",
+        //   advisers: "Артеменко Л.В. Сімонова О.М. Шешеня Л.П. ",
+        // },
+        // {
+        //   number: 22,
+        //   name: "ГО «Черкаська обласна сільськогосподарська дорадча служба» ",
+        //   region: "Черкаська",
+        //   specialization: "Бухгалтерський облік",
+        //   contacts: "email:chro.apu@ukr.net  tel:096-044-33-96",
+        //   advisers: "Дерій І.В. Бойко О.В. Гавриш О.М.",
+        // },
+        // {
+        //   number: 23,
+        //   name: "ГО «Буковинська асоціація сільськогосподарських дорадчих служб»",
+        //   region: "Чернівецька",
+        //   specialization: "Податковий облік",
+        //   contacts: "email:bukdorada@gmail.com tel:050-374-97-98",
+        //   advisers: "Мельник Н.М. Сахацький М.І. Бабічук Д.Д.",
+        // },
+        // {
+        //   number: 24,
+        //   name: "ГО «Чернігівська сільськогосподарська дорадча служба»",
+        //   region: "Чернігівська",
+        //   specialization: "Бухгалтерський облік",
+        //   contacts: "email:gochds2018@ukr.net tel:0462-670-470",
+        //   advisers: "Москаленко А.М. Волкогон В.В. Христенко О.І.",
+        // },
+        // {
+        //   number: 25,
+        //   name: "ГО «Центр сприяння розвитку громад»",
+        //   region: "Чернігівська",
+        //   specialization: "Податковий облік",
+        //   contacts: "email:r.oleksenko2014@gmail.com tel:+380506271096",
+        //   advisers: "Олексенко Р.М. Короленко Т.О. Труба І.І.",
+        // },
+        // {
+        //   number: 26,
+        //   name: "ТОВ “Придніпровська сільськогосподарська дорадча служба” ",
+        //   region: "Дніпропетровська",
+        //   specialization: "Управлінський облік",
+        //   contacts: " email:migulov@gmail.com  tel:+380675667889",
+        //   advisers: "Капітанчук Д.А. Балак В.Є. Мігульов О.В.",
+        // },
+        // {
+        //   number: 27,
+        //   name: "ГО «Сільськогосподарська дорадча служба «Аграрна наука»» ",
+        //   region: "Кіровоградська",
+        //   specialization: "Бухгалтерський облік",
+        //   contacts: "tel:+380986635410,",
+        //   advisers: "Гуменюк О.Б. Гайденко О.М. Кренців Я.І.",
+        // },
+        // {
+        //   number: 28,
+        //   name: "Сільськогосподарський обслуговуючий кооператив «Агрокеар»",
+        //   region: "Київська",
+        //   specialization: "Податковий облік",
+        //   contacts: "email:info@agrocare.farm tel:(044) 222-78-09",
+        //   advisers: "Кальна-Дубенюк Т.П. Воронцов В.М. Биков М.І.",
+        // },
+        // {
+        //   number: 29,
+        //   name: "ТОВ «Центр розвитку фермерства»",
+        //   region: "Київська",
+        //   specialization: "Бухгалтерський облік",
+        //   contacts: "email:oil-trader@ukr.net tel:+380503095500",
+        //   advisers: "Яковець Н.І. Панасенко Є.В. Скрильник Є.В.",
+        // },
+        // {
+        //   number: 30,
+        //   name: "СТ «Вінницька обласна сільськогосподарська дорадча служба «Агродорада»»",
+        //   region: "Вінницька",
+        //   specialization: "Податковий облік",
+        //   contacts: "email:agrodorada@gmail.com tel:0432-55-62-05",
+        //   advisers: "Климчук М.С. Клекот І.Ф. Одегов Д.О.",
+        // },
+        // {
+        //   number: 31,
+        //   name: "ТОВ «Сільськогосподарська дорадча служба ФЕРМЕРИ ВОЛИНІ»",
+        //   region: "Волинська",
+        //   specialization: "Управлінський облік",
+        //   contacts: " tel:0953558430",
+        //   advisers: "Каліш М.О. Бабіч І.І. Мазурик С.М.",
+        // },
+        // {
+        //   number: 32,
+        //   name: "ГО «Чернігівська обласна аграрна палата»",
+        //   region: "Чернігівська",
+        //   specialization: "Бухгалтерський облік",
+        //   contacts: "email:prischepa3@ukr.net tel:(0462) 66-82-35",
+        //   advisers: "Ткалич Ю.В. Прищепа А.Г. Тулюпа М.М.",
+        // },
+        // {
+        //   number: 33,
+        //   name: "ГО «Дорадча служба сільськогосподарських підприємців»",
+        //   region: "Херсонська ",
+        //   specialization: "Податковий облік",
+        //   contacts: "email:vasiliy.gubarenkov@ukr.net tel:+38(095)-829-49-88",
+        //   advisers: "Губаренков В.І. Якименко Ю.М. Близнюк А.С.",
+        // },
+        // {
+        //   number: 34,
+        //   name: "Сільськогосподарський обслуговуючий кооператив «Агро клуб 2020»",
+        //   region: "Одеська",
+        //   specialization: "Бухгалтерський облік",
+        //   contacts: "email:ac2020ua@gmail.com tel:+38 (094)-886-14-09",
+        //   advisers: "Говенко П.М. Ганопик С.В. Самборський Є.О.",
+        // },
+        // {
+        //   number: 35,
+        //   name: "ТОВ «ЦЕНТР ФЕРМЕРСЬКИХ КОМПЕТЕНЦІЙ»",
+        //   region: "Київська",
+        //   specialization: "Податковий облік",
+        //   contacts: "tel:+38(050)-383-07-15",
+        //   advisers: "Смірнова Т.С. Кухтіна І.О. Лакеєва М.Ю.",
+        // },
+        // {
+        //   number: 36,
+        //   name: "ТОВ «ТАНТУМ»",
+        //   region: "Одеська",
+        //   specialization: "Управлінський облік",
+        //   contacts: "tel:+38(068)-510-20-30",
+        //   advisers: "Берднік Л.М. Головін Ю.С. Мельник Є.Б.",
+        // },
+        // {
+        //   number: 37,
+        //   name: "Сільськогоподарський кооператив «РІВНЕНСЬКА ДОРАДЧА СЛУЖБА»",
+        //   region: "Рівненська",
+        //   specialization: "Бухгалтерський облік",
+        //   contacts: "email:rivneagromilk@ukr.net tel:+38(097)-257-31-98",
+        //   advisers: "Потапчук Ю.М. Романюк В.В. Потапчук Т.Ю.",
+        // },
+        // {
+        //   number: 38,
+        //   name: "ГО «Інститут дорадництва «Чисте довкілля»»",
+        //   region: "Волинська",
+        //   specialization: "Податковий облік",
+        //   contacts: "tel:+38(050)-804-22-92",
+        //   advisers: "Мерленко І.М. Шворак А.М. Зінчук М.І.",
+        // },
+        // {
+        //   number: 39,
+        //   name: "ГО «Земля Таврії»",
+        //   region: "Херсонська",
+        //   specialization: "Бухгалтерський облік",
+        //   contacts: "email:zemlyatav@gmail.com tel:+38(0552)39-39-80",
+        //   advisers: "Синюк О.А. Подлужний Ю.В. Синюк О.Д.",
+        // },
+        // {
+        //   number: 40,
+        //   name: "Громадська спілка «Органічна Україна. Північ» ",
+        //   region: "Сумська",
+        //   specialization: "Податковий облік",
+        //   contacts:
+        //     "email:marahovskijandrej1@gmail.com <br>tel:+38(095)-818-42-48",
+        //   advisers: "Мараховський А.В. <br>Михайлов А.М.<br> Назаренко О.Г.",
+        // },
+      ];
+      console.log(specialization);
+      console.log(region);
+
+      const selected = [];
+      for (let i = 0; i < organizations.length; i++) {
+        const check = checkOrganization(
+          organizations[i],
+          region,
+          specialization
+        );
+        if (check) {
+          selected.push(organizations[i]);
+        }
+      }
+      return selected;
+    };
+
+    const creaitOrganizationRow = function (organization) {
+      console.log(organization);
+      const rowElement = document.createElement("tr");
+      const number = document.createElement("td");
+      const name = document.createElement("td");
+      const specialization = document.createElement("td");
+      const contacts = document.createElement("td");
+      const advisers = document.createElement("td");
+      const b = document.createElement("td");
+      name.innerText = organization.name;
+      number.innerText = organization.number;
+      specialization.innerText = organization.specialization;
+      contacts.innerHTML = organization.contacts;
+      advisers.innerHTML = organization.advisers;
+      rowElement.appendChild(number);
+      rowElement.appendChild(name);
+      rowElement.appendChild(specialization);
+      rowElement.appendChild(contacts);
+      rowElement.appendChild(b);
+      rowElement.appendChild(advisers);
+      return rowElement;
+    };
+    const tableElement = document.getElementById("organizationsTableBody");
+    const showTable = function () {
+      const organizations = getOrganizations(btn.value, specialization.value);
+      tableElement.innerHTML = "";
+      let index = 0;
+      while (index < organizations.length) {
+        console.log(index);
+        const row = creaitOrganizationRow(organizations[index]);
+        console.log(row);
+        tableElement.appendChild(row);
+        index = index + 1;
+      }
+    };
+    showTable();
+    btn.addEventListener("input", showTable);
+    specialization.addEventListener("input", showTable);
+  </script>
+</html>
